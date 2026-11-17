@@ -3,745 +3,421 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#090912">
-<meta name="description" content="STAN STARS STORE — магазин Telegram Stars.">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#090a12">
 <title>STAN STARS STORE</title>
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 <style>
 :root {
-  --bg: #090912;
-  --panel: #121220;
-  --panel2: #19192a;
-  --text: #f8f7ff;
-  --muted: #9291a8;
-  --purple: #9874ff;
-  --cyan: #65e4e9;
-  --line: rgba(255,255,255,.09);
-  --radius: 22px;
+  --bg:#090a12;
+  --panel:#121421;
+  --panel2:#191c2d;
+  --purple:#8b5cf6;
+  --cyan:#38d9e8;
+  --text:#f7f7ff;
+  --muted:#9296ad;
+  --border:rgba(255,255,255,.08);
 }
-
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--text);
-  background:
-    radial-gradient(ellipse at 50% -15%, rgba(119,82,255,.22), transparent 50%),
-    var(--bg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  -webkit-font-smoothing: antialiased;
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  min-height:100vh;padding-bottom:90px;
 }
-
-button { font: inherit; cursor: pointer; }
-button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-
-.container {
-  width: min(100% - 32px, 540px);
-  margin: 0 auto;
+button,input{font:inherit}
+button{cursor:pointer}
+.app{max-width:520px;margin:auto;padding:18px 16px 30px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{
+  width:43px;height:43px;border-radius:14px;
+  display:grid;place-items:center;font-weight:900;font-size:17px;
+  background:linear-gradient(135deg,var(--purple),var(--cyan));
+  color:#090a12;
 }
-
-header {
-  padding: max(22px, env(safe-area-inset-top)) 0 18px;
+.brand-name{font-size:16px;font-weight:900;letter-spacing:.5px}
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:3px}
+.status{font-size:10px;color:#72e6b0;background:#143126;padding:7px 10px;border-radius:20px}
+.hero{
+  position:relative;overflow:hidden;padding:24px 20px;border-radius:24px;
+  background:linear-gradient(125deg,#29204d,#172d42 100%);
+  border:1px solid rgba(255,255,255,.09);margin-bottom:22px;
 }
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.hero:after{
+  content:"✦";position:absolute;right:22px;top:15px;
+  font-size:100px;color:rgba(255,255,255,.08);
 }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 11px;
+.eyebrow{font-size:10px;letter-spacing:2px;color:#c5b3ff;font-weight:800}
+.hero h1{font-size:29px;line-height:1.12;margin:12px 0 8px;max-width:280px}
+.hero p{font-size:13px;color:#c3c5d7;margin:0;line-height:1.5}
+.hero-tag{
+  display:inline-block;margin-top:17px;padding:8px 12px;border-radius:12px;
+  background:rgba(255,255,255,.1);font-size:11px;font-weight:700;
 }
-
-.brand-icon {
-  width: 43px;
-  height: 43px;
-  display: grid;
-  place-items: center;
-  border-radius: 15px;
-  background: linear-gradient(140deg, #a58aff, #6843d9);
-  box-shadow: 0 7px 25px rgba(132,93,255,.28);
-  font-size: 22px;
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:22px 0 13px}
+.section-head h2{font-size:19px;margin:0}
+.section-head span{font-size:11px;color:var(--muted)}
+.page{display:none}
+.page.active{display:block}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.product{
+  background:linear-gradient(150deg,#171a2a,#10121d);
+  border:1px solid var(--border);border-radius:18px;padding:15px 13px;
 }
-
-.brand-name {
-  font-size: 15px;
-  font-weight: 850;
-  letter-spacing: 1.3px;
+.product-top{display:flex;justify-content:space-between;align-items:center}
+.star-icon{
+  width:34px;height:34px;border-radius:11px;display:grid;place-items:center;
+  background:rgba(139,92,246,.17);color:#c4aaff;font-size:19px;
 }
-
-.brand-caption {
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 4px;
-  letter-spacing: 2px;
+.product-label{font-size:9px;color:var(--muted);letter-spacing:1px}
+.product h3{font-size:22px;margin:13px 0 4px}
+.product h3 small{font-size:11px;color:var(--muted);font-weight:500}
+.price{font-size:14px;font-weight:800;color:#79e8ef;margin-bottom:13px}
+.add-btn,.primary-btn{
+  border:0;border-radius:12px;padding:12px;width:100%;
+  color:white;font-weight:800;
+  background:linear-gradient(100deg,#8155ed,#526de8);
 }
-
-.status {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 11px;
-  border: 1px solid var(--line);
-  border-radius: 30px;
-  color: #b7f7d3;
-  font-size: 11px;
-  background: rgba(255,255,255,.035);
+.add-btn:active,.primary-btn:active{transform:scale(.98)}
+.custom-box,.panel{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:18px;padding:16px;margin-top:15px;
 }
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  background: #59e5a1;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #59e5a1;
+.custom-box h3{margin:0 0 6px;font-size:15px}
+.muted{color:var(--muted);font-size:12px;line-height:1.5}
+.custom-row{display:flex;gap:9px;margin-top:13px}
+.custom-row input{
+  min-width:0;flex:1;background:var(--panel2);border:1px solid var(--border);
+  color:white;border-radius:12px;padding:12px;outline:none;
 }
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  margin-top: 20px;
-  padding: 30px 24px;
-  border: 1px solid rgba(171,143,255,.2);
-  border-radius: 28px;
-  background:
-    radial-gradient(circle at 90% 15%, rgba(160,119,255,.24), transparent 35%),
-    linear-gradient(135deg, #1c1933, #11111e 70%);
+.custom-row button{width:105px}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+.info-tile{background:var(--panel);border:1px solid var(--border);padding:14px;border-radius:15px}
+.info-tile b{display:block;font-size:13px;margin:8px 0 4px}
+.info-tile span{font-size:11px;color:var(--muted)}
+.cart-item{
+  display:flex;align-items:center;gap:10px;padding:13px 0;
+  border-bottom:1px solid var(--border);
 }
-
-.hero::after {
-  content: "✦";
-  position: absolute;
-  right: 22px;
-  top: 15px;
-  color: rgba(185,165,255,.22);
-  font-size: 105px;
-  transform: rotate(15deg);
+.cart-item:last-child{border-bottom:0}
+.cart-info{flex:1;min-width:0}
+.cart-info b{display:block;font-size:14px}
+.cart-info span{font-size:11px;color:var(--muted)}
+.qty{display:flex;align-items:center;gap:9px}
+.qty button{
+  width:29px;height:29px;border:1px solid var(--border);
+  background:var(--panel2);color:white;border-radius:9px;font-size:17px;
 }
-
-.eyebrow {
-  color: var(--cyan);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
+.total-row{display:flex;justify-content:space-between;padding:15px 0;font-weight:800}
+.empty{text-align:center;padding:30px 12px;color:var(--muted);font-size:13px}
+.order-card{padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:15px;margin-bottom:10px}
+.order-card b{font-size:14px}
+.order-card p{font-size:12px;color:var(--muted);margin:7px 0}
+.pill{display:inline-block;font-size:10px;padding:5px 8px;border-radius:20px;background:#28213e;color:#c8b2ff}
+.notice{padding:13px;border-radius:13px;background:#202033;color:#c6c7d8;font-size:12px;line-height:1.5}
+.bottom-nav{
+  position:fixed;z-index:10;bottom:0;left:0;right:0;
+  background:rgba(13,14,23,.96);backdrop-filter:blur(18px);
+  border-top:1px solid var(--border);padding:9px 5px calc(9px + env(safe-area-inset-bottom));
+  display:flex;justify-content:space-around;max-width:520px;margin:auto;
 }
-
-.hero h1 {
-  position: relative;
-  z-index: 1;
-  max-width: 340px;
-  margin: 16px 0 10px;
-  font-size: clamp(31px, 8vw, 43px);
-  line-height: 1.08;
-  letter-spacing: -1.7px;
+.nav-btn{
+  flex:1;border:0;background:none;color:#85899f;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-size:9px;padding:5px 0;
 }
-
-.gradient-text {
-  color: transparent;
-  background: linear-gradient(90deg, #b49aff, #69e5e9);
-  background-clip: text;
-  -webkit-background-clip: text;
+.nav-btn .nav-icon{font-size:19px}
+.nav-btn.active{color:#b99aff}
+.toast{
+  position:fixed;z-index:20;bottom:90px;left:50%;transform:translateX(-50%);
+  background:#29243b;border:1px solid #55417e;color:white;
+  padding:11px 16px;border-radius:12px;font-size:12px;
+  display:none;max-width:90%;text-align:center;
 }
-
-.hero p {
-  position: relative;
-  z-index: 1;
-  max-width: 270px;
-  color: #aaa8c0;
-  font-size: 13px;
-  line-height: 1.65;
-}
-
-.hero-tag {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 10px;
-  padding: 9px 12px;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 12px;
-  background: rgba(255,255,255,.05);
-  font-size: 11px;
-  color: #d9d1ff;
-}
-
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  margin: 34px 0 17px;
-}
-
-.section-heading h2 {
-  margin: 0;
-  font-size: 21px;
-  letter-spacing: -.5px;
-}
-
-.section-heading span {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 13px;
-}
-
-.product {
-  position: relative;
-  min-width: 0;
-  padding: 19px 15px 15px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: linear-gradient(145deg, #191929, #11111d);
-  transition: transform .2s, border-color .2s;
-}
-
-.product:active { transform: scale(.975); }
-
-.product.featured {
-  border-color: rgba(151,116,255,.6);
-  background: linear-gradient(145deg, #282044, #151322);
-}
-
-.product-badge {
-  position: absolute;
-  top: 12px;
-  right: 10px;
-  padding: 5px 8px;
-  border-radius: 20px;
-  color: #d8caff;
-  background: rgba(151,116,255,.17);
-  font-size: 9px;
-  font-weight: 800;
-}
-
-.coin {
-  width: 49px;
-  height: 49px;
-  display: grid;
-  place-items: center;
-  margin-bottom: 17px;
-  border-radius: 16px;
-  background: linear-gradient(145deg, #ffe99b, #d59a36);
-  color: #50320b;
-  box-shadow: 0 6px 20px rgba(226,171,66,.15);
-  font-size: 27px;
-}
-
-.product h3 {
-  margin: 0;
-  font-size: 24px;
-  letter-spacing: -.7px;
-}
-
-.product .unit {
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.price {
-  min-height: 19px;
-  margin-top: 17px;
-  color: var(--cyan);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.add-button {
-  width: 100%;
-  margin-top: 13px;
-  padding: 12px 8px;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 12px;
-  background: rgba(255,255,255,.07);
-  color: white;
-  font-size: 12px;
-  font-weight: 750;
-  transition: background .2s;
-}
-
-.featured .add-button,
-.add-button:hover {
-  border-color: transparent;
-  background: linear-gradient(100deg, #9874ff, #7353df);
-}
-
-.add-button:active { opacity: .8; }
-
-.benefits {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-  margin-top: 25px;
-}
-
-.benefit {
-  padding: 14px 7px;
-  text-align: center;
-  border: 1px solid var(--line);
-  border-radius: 15px;
-  background: rgba(255,255,255,.025);
-}
-
-.benefit-icon { font-size: 20px; }
-
-.benefit strong {
-  display: block;
-  margin-top: 8px;
-  font-size: 10px;
-}
-
-.benefit span {
-  display: block;
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 9px;
-}
-
-.cart {
-  margin-top: 25px;
-  padding: 19px;
-  border: 1px solid rgba(151,116,255,.23);
-  border-radius: 21px;
-  background: linear-gradient(145deg, #1b1830, #12121e);
-}
-
-.cart-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.cart-head h2 {
-  margin: 0;
-  font-size: 17px;
-}
-
-.cart-count {
-  padding: 5px 9px;
-  border-radius: 20px;
-  background: rgba(151,116,255,.18);
-  color: #d7caff;
-  font-size: 10px;
-}
-
-.cart-empty {
-  padding: 22px 0 5px;
-  color: var(--muted);
-  text-align: center;
-  font-size: 12px;
-}
-
-.cart-items {
-  margin-top: 12px;
-}
-
-.cart-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.cart-row strong { font-size: 13px; }
-.cart-row small { color: var(--muted); font-size: 10px; }
-
-.quantity {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.quantity button {
-  width: 29px;
-  height: 29px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: rgba(255,255,255,.07);
-  color: white;
-}
-
-.quantity span {
-  min-width: 12px;
-  text-align: center;
-  font-size: 12px;
-}
-
-.cart-summary {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 17px;
-  font-size: 12px;
-}
-
-.cart-summary span { color: var(--muted); }
-
-.cart-total {
-  color: var(--cyan);
-  font-weight: 800;
-}
-
-.checkout {
-  width: 100%;
-  margin-top: 17px;
-  padding: 15px;
-  border: 0;
-  border-radius: 13px;
-  background: linear-gradient(100deg, #9874ff, #7251df);
-  color: white;
-  font-size: 13px;
-  font-weight: 800;
-  box-shadow: 0 7px 22px rgba(119,82,255,.2);
-}
-
-.checkout:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.note {
-  margin: 13px 2px 0;
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.6;
-  text-align: center;
-}
-
-footer {
-  padding: 35px 0 calc(30px + env(safe-area-inset-bottom));
-  color: #68677d;
-  text-align: center;
-  font-size: 10px;
-  line-height: 1.8;
-}
-
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  display: none;
-  align-items: end;
-  justify-content: center;
-  padding: 15px;
-  background: rgba(0,0,0,.72);
-  backdrop-filter: blur(8px);
-}
-
-.modal-backdrop.open { display: flex; }
-
-.modal {
-  width: min(100%, 480px);
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: 25px;
-  background: #171625;
-  animation: rise .22s ease-out;
-}
-
-@keyframes rise {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.modal-icon { font-size: 31px; }
-
-.modal h2 {
-  margin: 13px 0 8px;
-  font-size: 20px;
-}
-
-.modal p {
-  color: #aaa8bc;
-  font-size: 12px;
-  line-height: 1.7;
-}
-
-.modal-close {
-  width: 100%;
-  margin-top: 12px;
-  padding: 13px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(255,255,255,.07);
-  color: white;
-}
-
-@media (max-width: 360px) {
-  .container { width: calc(100% - 24px); }
-  .product { padding: 15px 11px 12px; }
-  .product h3 { font-size: 21px; }
-}
+.footer{text-align:center;color:#656a80;font-size:10px;margin:25px 0 5px}
 </style>
 </head>
-
 <body>
-<div class="container">
-
-<header>
-  <div class="topbar">
+<div class="app">
+  <header class="header">
     <div class="brand">
-      <div class="brand-icon">✦</div>
+      <div class="logo">S</div>
       <div>
-        <div class="brand-name">STAN STARS</div>
-        <div class="brand-caption">DIGITAL STORE</div>
+        <div class="brand-name">STAN STARS STORE</div>
+        <div class="brand-sub">DIGITAL STORE</div>
       </div>
     </div>
-    <div class="status">
-      <span class="status-dot"></span>
-      ONLINE
-    </div>
-  </div>
-</header>
+    <div class="status">● ONLINE</div>
+  </header>
 
-<main>
-  <section class="hero">
-    <div class="eyebrow">THE NEXT LEVEL</div>
-    <h1>Твой мир.<br><span class="gradient-text">Твои Stars.</span></h1>
-    <p>Выбирай свой пакет Telegram Stars и открывай новые возможности.</p>
-    <div class="hero-tag">✦ Премиальный цифровой магазин</div>
-  </section>
-
-  <div class="section-heading">
-    <h2>Выбери пакет</h2>
-    <span>4 предложения</span>
-  </div>
-
-  <section class="products" aria-label="Пакеты Telegram Stars">
-    <article class="product">
-      <div class="coin">★</div>
-      <h3>50</h3>
-      <div class="unit">TELEGRAM STARS</div>
-      <div class="price">Цена уточняется</div>
-      <button class="add-button" data-amount="50">Добавить в корзину</button>
-    </article>
-
-    <article class="product featured">
-      <div class="product-badge">POPULAR</div>
-      <div class="coin">★</div>
-      <h3>100</h3>
-      <div class="unit">TELEGRAM STARS</div>
-      <div class="price">Цена уточняется</div>
-      <button class="add-button" data-amount="100">Добавить в корзину</button>
-    </article>
-
-    <article class="product">
-      <div class="coin">★</div>
-      <h3>250</h3>
-      <div class="unit">TELEGRAM STARS</div>
-      <div class="price">Цена уточняется</div>
-      <button class="add-button" data-amount="250">Добавить в корзину</button>
-    </article>
-
-    <article class="product">
-      <div class="product-badge">BIG PACK</div>
-      <div class="coin">★</div>
-      <h3>500</h3>
-      <div class="unit">TELEGRAM STARS</div>
-      <div class="price">Цена уточняется</div>
-      <button class="add-button" data-amount="500">Добавить в корзину</button>
-    </article>
-  </section>
-
-  <section class="benefits">
-    <div class="benefit">
-      <div class="benefit-icon">⚡</div>
-      <strong>Удобно</strong>
-      <span>Простой выбор</span>
-    </div>
-    <div class="benefit">
-      <div class="benefit-icon">🔒</div>
-      <strong>Безопасность</strong>
-      <span>Защита данных</span>
-    </div>
-    <div class="benefit">
-      <div class="benefit-icon">✦</div>
-      <strong>Современно</strong>
-      <span>Telegram Mini App</span>
-    </div>
-  </section>
-
-  <section class="cart" aria-label="Корзина">
-    <div class="cart-head">
-      <h2>Твоя корзина</h2>
-      <span class="cart-count" id="cartCount">0 товаров</span>
-    </div>
-
-    <div id="cartItems" class="cart-empty" aria-live="polite">
-      Здесь пока пусто. Выбери свой первый пакет ★
-    </div>
-
-    <div id="cartSummary" hidden>
-      <div class="cart-summary">
-        <span>Всего Stars</span>
-        <strong class="cart-total" id="totalStars">0 ★</strong>
+  <main>
+    <section class="page active" id="home">
+      <div class="hero">
+        <div class="eyebrow">WELCOME TO STAN STORE</div>
+        <h1>Твой мир.<br>Твои Stars.</h1>
+        <p>Выбирай нужное количество Telegram Stars в несколько нажатий.</p>
+        <div class="hero-tag">✦ Быстрый выбор · Удобная корзина</div>
       </div>
-      <button class="checkout" id="checkoutButton">Продолжить</button>
-    </div>
-    <p class="note">Цены и оформление заказа будут доступны после подключения платёжной системы.</p>
-  </section>
-</main>
+      <div class="section-head">
+        <h2>Покупка Stars</h2><span>От 50 Stars</span>
+      </div>
+      <div class="products" id="homeProducts"></div>
+      <div class="custom-box">
+        <h3>Своё количество</h3>
+        <div class="muted">Введи любое количество от 50 Stars. Стоимость рассчитается автоматически.</div>
+        <div class="custom-row">
+          <input id="customAmount" type="number" min="50" step="1" placeholder="Например, 375">
+          <button class="primary-btn" onclick="addCustom()">Добавить</button>
+        </div>
+        <div class="muted" id="customPrice" style="margin-top:9px">1 Star = 234 сум</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-tile"><div>🛒</div><b>Удобная корзина</b><span>Меняй количество и считай сумму</span></div>
+        <div class="info-tile"><div>🧾</div><b>Мои заказы</b><span>Сохраняй отправленные заявки</span></div>
+        <div class="info-tile"><div>💬</div><b>Поддержка</b><span>Связь с магазином</span></div>
+        <div class="info-tile"><div>⭐</div><b>Выбор пакетов</b><span>От 50 до 5000 Stars</span></div>
+      </div>
+    </section>
 
-<footer>
-  <strong>STAN STARS STORE</strong><br>
-  YOUR STARS. YOUR WORLD.<br>
-  © 2026
-</footer>
+    <section class="page" id="catalog">
+      <div class="section-head"><h2>Каталог Stars</h2><span>16 пакетов</span></div>
+      <div class="products" id="catalogProducts"></div>
+      <div class="custom-box">
+        <h3>Нужное количество?</h3>
+        <div class="muted">Введи своё число, минимум 50 Stars.</div>
+        <div class="custom-row">
+          <input id="catalogCustom" type="number" min="50" step="1" placeholder="Количество Stars">
+          <button class="primary-btn" onclick="addCustom('catalogCustom')">Добавить</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="cart">
+      <div class="section-head"><h2>Корзина</h2><span id="cartCount">0 товаров</span></div>
+      <div class="panel" id="cartContent"></div>
+      <div class="notice" style="margin-top:13px">
+        Это предварительная заявка. Оплата и автоматическая выдача Stars пока не подключены.
+      </div>
+      <button class="primary-btn" style="margin-top:14px" onclick="sendOrder()">Отправить заявку</button>
+    </section>
+
+    <section class="page" id="orders">
+      <div class="section-head"><h2>Мои заказы</h2><span>На этом устройстве</span></div>
+      <div id="ordersContent"></div>
+    </section>
+
+    <section class="page" id="support">
+      <div class="section-head"><h2>Поддержка</h2></div>
+      <div class="panel">
+        <div style="font-size:34px">💬</div>
+        <h3>Нужна помощь?</h3>
+        <p class="muted">Свяжись с администратором магазина по вопросам заказа и работы сервиса.</p>
+        <button class="primary-btn" onclick="contactSupport()">Написать в поддержку</button>
+        <p class="muted" style="margin-top:12px">Ссылка на поддержку настраивается владельцем магазина в коде.</p>
+      </div>
+    </section>
+
+    <section class="page" id="reviews">
+      <div class="section-head"><h2>Отзывы</h2></div>
+      <div class="panel">
+        <div style="font-size:30px">⭐</div>
+        <h3>Отзывы покупателей</h3>
+        <p class="muted">Здесь будут размещаться реальные отзывы клиентов после запуска магазина.</p>
+        <span class="pill">Скоро</span>
+      </div>
+    </section>
+
+    <section class="page" id="info">
+      <div class="section-head"><h2>Информация</h2></div>
+      <div class="panel">
+        <h3>О магазине</h3>
+        <p class="muted">STAN STARS STORE — магазин с каталогом пакетов Telegram Stars.</p>
+        <hr style="border:0;border-top:1px solid var(--border);margin:16px 0">
+        <h3>Стоимость</h3>
+        <p class="muted">Тариф: 234 сум за 1 Star. Итоговая стоимость рассчитывается автоматически.</p>
+        <hr style="border:0;border-top:1px solid var(--border);margin:16px 0">
+        <h3>Оплата и доставка</h3>
+        <p class="muted">Оплата и автоматическая доставка пока не подключены. Отправка заявки сама по себе не означает оплату или получение Stars.</p>
+        <hr style="border:0;border-top:1px solid var(--border);margin:16px 0">
+        <h3>Минимальный заказ</h3>
+        <p class="muted">От 50 Telegram Stars.</p>
+      </div>
+    </section>
+  </main>
+  <div class="footer">STAN STARS STORE · DIGITAL STORE</div>
 </div>
 
-<div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <div class="modal-icon">✦</div>
-    <h2 id="modalTitle">Магазин готовится к запуску</h2>
-    <p id="modalText">Корзина работает, но оформление заказов пока не подключено. Мы подключим безопасную оплату и выдачу Stars на следующем этапе.</p>
-    <button class="modal-close" id="closeModal">Понятно</button>
-  </div>
-</div>
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-page="home" onclick="showPage('home',this)"><span class="nav-icon">⌂</span>Главная</button>
+  <button class="nav-btn" data-page="catalog" onclick="showPage('catalog',this)"><span class="nav-icon">✦</span>Каталог</button>
+  <button class="nav-btn" data-page="cart" onclick="showPage('cart',this)"><span class="nav-icon">🛒</span>Корзина</button>
+  <button class="nav-btn" data-page="orders" onclick="showPage('orders',this)"><span class="nav-icon">▤</span>Заказы</button>
+  <button class="nav-btn" data-page="support" onclick="showPage('support',this)"><span class="nav-icon">☏</span>Помощь</button>
+</nav>
+<div class="toast" id="toast"></div>
 
 <script>
-(() => {
-  "use strict";
+const PRICE_PER_STAR = 234;
+const PACKAGES = [50,75,100,150,200,250,300,400,500,750,1000,1250,1500,2000,2500,3000,5000];
 
-  const tg = window.Telegram?.WebApp;
-  if (tg) {
-    tg.ready();
-    tg.expand();
-    try {
-      tg.setHeaderColor("#090912");
-      tg.setBackgroundColor("#090912");
-    } catch (_) {}
+// ВПИШИ СЮДА username поддержки без символа @
+const SUPPORT_USERNAME = "YOUR_SUPPORT_USERNAME";
+
+const tg = window.Telegram?.WebApp;
+if (tg) {
+  tg.ready();
+  tg.expand();
+  try {
+    tg.setHeaderColor("#090a12");
+    tg.setBackgroundColor("#090a12");
+  } catch(e) {}
+}
+
+let cart = {};
+let orders = [];
+try { orders = JSON.parse(localStorage.getItem("stan_orders") || "[]"); } catch(e) { orders = []; }
+
+function money(value) {
+  return Math.round(value).toLocaleString("ru-RU") + " сум";
+}
+function price(amount) {
+  return amount * PRICE_PER_STAR;
+}
+function showToast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => el.style.display = "none", 2300);
+}
+function productCard(amount) {
+  return `<article class="product">
+    <div class="product-top"><div class="star-icon">★</div><span class="product-label">TELEGRAM STARS</span></div>
+    <h3>${amount.toLocaleString("ru-RU")} <small>Stars</small></h3>
+    <div class="price">${money(price(amount))}</div>
+    <button class="add-btn" onclick="addToCart(${amount})">Добавить в корзину</button>
+  </article>`;
+}
+function renderProducts() {
+  document.getElementById("homeProducts").innerHTML = PACKAGES.slice(0,6).map(productCard).join("");
+  document.getElementById("catalogProducts").innerHTML = PACKAGES.map(productCard).join("");
+}
+function addToCart(amount) {
+  amount = Number(amount);
+  if (!Number.isInteger(amount) || amount < 50) {
+    showToast("Минимальный заказ — 50 Stars");
+    return;
   }
-
-  const cart = new Map();
-  const cartItems = document.getElementById("cartItems");
-  const cartCount = document.getElementById("cartCount");
-  const cartSummary = document.getElementById("cartSummary");
-  const totalStars = document.getElementById("totalStars");
-  const modal = document.getElementById("modal");
-  const checkoutButton = document.getElementById("checkoutButton");
-
-  const format = value => new Intl.NumberFormat("ru-RU").format(value);
-
-  function notify(message) {
-    if (tg?.showAlert) {
-      tg.showAlert(message);
-    } else {
-      alert(message);
-    }
-  }
-
-  function renderCart() {
-    const entries = [...cart.entries()];
-    const totalItems = entries.reduce((sum, [, qty]) => sum + qty, 0);
-    const stars = entries.reduce((sum, [amount, qty]) => sum + amount * qty, 0);
-
-    cartCount.textContent = `${totalItems} товаров`;
-    totalStars.textContent = `${format(stars)} ★`;
-    cartSummary.hidden = totalItems === 0;
-
-    if (!totalItems) {
-      cartItems.className = "cart-empty";
-      cartItems.textContent = "Здесь пока пусто. Выбери свой первый пакет ★";
-      return;
-    }
-
-    cartItems.className = "cart-items";
-    cartItems.replaceChildren();
-
-    entries.forEach(([amount, qty]) => {
-      const row = document.createElement("div");
-      row.className = "cart-row";
-
-      const info = document.createElement("div");
-      const title = document.createElement("strong");
-      title.textContent = `${amount} Stars`;
-      const sub = document.createElement("br");
-      const small = document.createElement("small");
-      small.textContent = `${format(amount * qty)} Stars всего`;
-      info.append(title, sub, small);
-
-      const controls = document.createElement("div");
-      controls.className = "quantity";
-
-      const minus = document.createElement("button");
-      minus.type = "button";
-      minus.textContent = "−";
-      minus.setAttribute("aria-label", `Уменьшить пакет ${amount}`);
-      minus.addEventListener("click", () => changeQuantity(amount, -1));
-
-      const number = document.createElement("span");
-      number.textContent = qty;
-
-      const plus = document.createElement("button");
-      plus.type = "button";
-      plus.textContent = "+";
-      plus.setAttribute("aria-label", `Добавить пакет ${amount}`);
-      plus.addEventListener("click", () => changeQuantity(amount, 1));
-
-      controls.append(minus, number, plus);
-      row.append(info, controls);
-      cartItems.append(row);
-    });
-  }
-
-  function changeQuantity(amount, change) {
-    const next = (cart.get(amount) || 0) + change;
-    if (next <= 0) cart.delete(amount);
-    else cart.set(amount, next);
-    renderCart();
-    tg?.HapticFeedback?.selectionChanged?.();
-  }
-
-  document.querySelectorAll("[data-amount]").forEach(button => {
-    button.addEventListener("click", () => {
-      const amount = Number(button.dataset.amount);
-      if (![50, 100, 250, 500].includes(amount)) return;
-      changeQuantity(amount, 1);
-      tg?.HapticFeedback?.impactOccurred?.("light");
-    });
-  });
-
-  function openModal() {
-    modal.classList.add("open");
-    document.getElementById("closeModal").focus();
-  }
-
-  function closeModal() {
-    modal.classList.remove("open");
-  }
-
-  checkoutButton.addEventListener("click", openModal);
-  document.getElementById("closeModal").addEventListener("click", closeModal);
-
-  modal.addEventListener("click", event => {
-    if (event.target === modal) closeModal();
-  });
-
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeModal();
-  });
-
+  cart[amount] = (cart[amount] || 0) + 1;
   renderCart();
-})();
+  showToast(amount + " Stars добавлено в корзину");
+}
+function addCustom(inputId = "customAmount") {
+  const input = document.getElementById(inputId);
+  const amount = Number(input.value);
+  if (!Number.isInteger(amount) || amount < 50) {
+    showToast("Введи целое число от 50 Stars");
+    input.focus();
+    return;
+  }
+  addToCart(amount);
+  input.value = "";
+}
+function changeQuantity(amount, delta) {
+  cart[amount] = (cart[amount] || 0) + delta;
+  if (cart[amount] <= 0) delete cart[amount];
+  renderCart();
+}
+function renderCart() {
+  const entries = Object.entries(cart).map(([amount,qty]) => [Number(amount),qty]);
+  const count = entries.reduce((sum,item) => sum + item[1], 0);
+  const totalStars = entries.reduce((sum,item) => sum + item[0]*item[1], 0);
+  const totalPrice = price(totalStars);
+  document.getElementById("cartCount").textContent = count + " позиций";
+  const box = document.getElementById("cartContent");
+  if (!entries.length) {
+    box.innerHTML = `<div class="empty"><div style="font-size:35px;margin-bottom:10px">🛒</div>Корзина пока пуста.<br>Выбери пакет Stars в каталоге.</div>`;
+    return;
+  }
+  box.innerHTML = entries.sort((a,b)=>a[0]-b[0]).map(([amount,qty]) => `
+    <div class="cart-item">
+      <div class="star-icon">★</div>
+      <div class="cart-info"><b>${amount.toLocaleString("ru-RU")} Stars</b><span>${money(price(amount))} за пакет</span></div>
+      <div class="qty">
+        <button onclick="changeQuantity(${amount},-1)">−</button>
+        <b>${qty}</b>
+        <button onclick="changeQuantity(${amount},1)">+</button>
+      </div>
+    </div>`).join("") + `
+    <div class="total-row"><span>Всего Stars</span><span>${totalStars.toLocaleString("ru-RU")}</span></div>
+    <div class="total-row" style="padding-top:0"><span>К оплате</span><span style="color:#79e8ef">${money(totalPrice)}</span></div>`;
+}
+function showPage(page, button) {
+  document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
+  document.getElementById(page).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(el => el.classList.remove("active"));
+  if (button) button.classList.add("active");
+  else {
+    const nav = document.querySelector(`[data-page="${page}"]`);
+    if (nav) nav.classList.add("active");
+  }
+  if (page === "orders") renderOrders();
+  if (page === "cart") renderCart();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function sendOrder() {
+  const entries = Object.entries(cart);
+  if (!entries.length) {
+    showToast("Сначала добавь Stars в корзину");
+    return;
+  }
+  const totalStars = entries.reduce((sum,[amount,qty]) => sum + Number(amount)*qty,0);
+  const totalPrice = price(totalStars);
+  const id = "STAN-" + Date.now().toString().slice(-8);
+  const lines = entries.map(([amount,qty]) => `${amount} Stars × ${qty} = ${money(price(Number(amount)*qty))}`);
+  const order = {
+    id, date:new Date().toLocaleString("ru-RU"),
+    lines, totalStars, totalPrice,
+    status:"Заявка не отправлена"
+  };
+  orders.unshift(order);
+  try { localStorage.setItem("stan_orders",JSON.stringify(orders)); } catch(e) {}
+  const message = `Заявка ${id}%0A${encodeURIComponent(lines.join("\n"))}%0AВсего: ${totalStars} Stars%0AСумма: ${encodeURIComponent(money(totalPrice))}%0A%0AЭто заявка, не подтверждение оплаты.`;
+  const shareUrl = "https://t.me/share/url?url=&text=" + message;
+  if (tg?.openTelegramLink) tg.openTelegramLink(shareUrl);
+  else window.open(shareUrl,"_blank");
+  cart = {};
+  renderCart();
+  renderOrders();
+  showToast("Заявка сохранена в истории на этом устройстве");
+}
+function renderOrders() {
+  const box = document.getElementById("ordersContent");
+  if (!orders.length) {
+    box.innerHTML = `<div class="panel empty">Здесь пока нет заказов.</div>`;
+    return;
+  }
+  box.innerHTML = orders.map(order => `
+    <div class="order-card">
+      <b>${order.id}</b>
+      <p>${order.date}</p>
+      <p>${order.lines.join("<br>")}</p>
+      <p><b>${order.totalStars.toLocaleString("ru-RU")} Stars · ${money(order.totalPrice)}</b></p>
+      <span class="pill">${order.status}</span>
+    </div>`).join("");
+}
+function contactSupport() {
+  if (!SUPPORT_USERNAME || SUPPORT_USERNAME === "YOUR_SUPPORT_USERNAME") {
+    showToast("Сначала укажи username поддержки в коде");
+    return;
+  }
+  const url = "https://t.me/" + SUPPORT_USERNAME.replace("@","");
+  if (tg?.openTelegramLink) tg.openTelegramLink(url);
+  else window.open(url,"_blank");
+}
+renderProducts();
+renderCart();
+renderOrders();
 </script>
 </body>
 </html>
