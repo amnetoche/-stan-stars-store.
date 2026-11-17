@@ -2,92 +2,746 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STAN STARS STORE</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #080808;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
-    header {
-      padding: 28px 20px;
-      text-align: center;
-      border-bottom: 1px solid #33270e;
-    }
-    .star { color: #d9a72e; font-size: 42px; }
-    h1 { color: #e8bd58; font-size: 25px; margin: 8px 0; }
-    header p { color: #aaa; font-size: 12px; letter-spacing: 3px; }
-    main { max-width: 480px; margin: auto; padding: 24px 18px; }
-    h2 { color: #e8bd58; font-size: 20px; }
-    .subtitle { color: #999; font-size: 14px; }
-    .product {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: #151515;
-      border: 1px solid #33270e;
-      border-radius: 14px;
-      padding: 17px;
-      margin: 12px 0;
-    }
-    .amount { font-size: 18px; font-weight: bold; }
-    .price { color: #e8bd58; margin-top: 5px; font-size: 14px; }
-    button {
-      background: linear-gradient(135deg, #f2d17b, #b7811d);
-      color: #111;
-      border: 0;
-      border-radius: 9px;
-      padding: 12px 17px;
-      font-weight: bold;
-    }
-    .note {
-      margin-top: 24px;
-      padding: 16px;
-      background: #151515;
-      border-radius: 12px;
-      color: #aaa;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    footer { text-align: center; color: #666; padding: 25px; font-size: 12px; }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="star">★</div>
-    <h1>STAN STARS STORE</h1>
-    <p>YOUR STARS. YOUR WORLD.</p>
-  </header>
-  <main>
-    <h2>Покупка Telegram Stars</h2>
-    <p class="subtitle">Выберите подходящий пакет</p>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090912">
+<meta name="description" content="STAN STARS STORE — магазин Telegram Stars.">
+<title>STAN STARS STORE</title>
 
-    <div class="product">
-      <div><div class="amount">50 Stars</div><div class="price">Цена скоро появится</div></div>
-      <button onclick="alert('Магазин пока находится в разработке')">Выбрать</button>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+:root {
+  --bg: #090912;
+  --panel: #121220;
+  --panel2: #19192a;
+  --text: #f8f7ff;
+  --muted: #9291a8;
+  --purple: #9874ff;
+  --cyan: #65e4e9;
+  --line: rgba(255,255,255,.09);
+  --radius: 22px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 50% -15%, rgba(119,82,255,.22), transparent 50%),
+    var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font: inherit; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+.container {
+  width: min(100% - 32px, 540px);
+  margin: 0 auto;
+}
+
+header {
+  padding: max(22px, env(safe-area-inset-top)) 0 18px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.brand-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(140deg, #a58aff, #6843d9);
+  box-shadow: 0 7px 25px rgba(132,93,255,.28);
+  font-size: 22px;
+}
+
+.brand-name {
+  font-size: 15px;
+  font-weight: 850;
+  letter-spacing: 1.3px;
+}
+
+.brand-caption {
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 4px;
+  letter-spacing: 2px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  color: #b7f7d3;
+  font-size: 11px;
+  background: rgba(255,255,255,.035);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: #59e5a1;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #59e5a1;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+  padding: 30px 24px;
+  border: 1px solid rgba(171,143,255,.2);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 90% 15%, rgba(160,119,255,.24), transparent 35%),
+    linear-gradient(135deg, #1c1933, #11111e 70%);
+}
+
+.hero::after {
+  content: "✦";
+  position: absolute;
+  right: 22px;
+  top: 15px;
+  color: rgba(185,165,255,.22);
+  font-size: 105px;
+  transform: rotate(15deg);
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  position: relative;
+  z-index: 1;
+  max-width: 340px;
+  margin: 16px 0 10px;
+  font-size: clamp(31px, 8vw, 43px);
+  line-height: 1.08;
+  letter-spacing: -1.7px;
+}
+
+.gradient-text {
+  color: transparent;
+  background: linear-gradient(90deg, #b49aff, #69e5e9);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.hero p {
+  position: relative;
+  z-index: 1;
+  max-width: 270px;
+  color: #aaa8c0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.hero-tag {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  background: rgba(255,255,255,.05);
+  font-size: 11px;
+  color: #d9d1ff;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin: 34px 0 17px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 21px;
+  letter-spacing: -.5px;
+}
+
+.section-heading span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.product {
+  position: relative;
+  min-width: 0;
+  padding: 19px 15px 15px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, #191929, #11111d);
+  transition: transform .2s, border-color .2s;
+}
+
+.product:active { transform: scale(.975); }
+
+.product.featured {
+  border-color: rgba(151,116,255,.6);
+  background: linear-gradient(145deg, #282044, #151322);
+}
+
+.product-badge {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  padding: 5px 8px;
+  border-radius: 20px;
+  color: #d8caff;
+  background: rgba(151,116,255,.17);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.coin {
+  width: 49px;
+  height: 49px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 17px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffe99b, #d59a36);
+  color: #50320b;
+  box-shadow: 0 6px 20px rgba(226,171,66,.15);
+  font-size: 27px;
+}
+
+.product h3 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -.7px;
+}
+
+.product .unit {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.price {
+  min-height: 19px;
+  margin-top: 17px;
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.add-button {
+  width: 100%;
+  margin-top: 13px;
+  padding: 12px 8px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  background: rgba(255,255,255,.07);
+  color: white;
+  font-size: 12px;
+  font-weight: 750;
+  transition: background .2s;
+}
+
+.featured .add-button,
+.add-button:hover {
+  border-color: transparent;
+  background: linear-gradient(100deg, #9874ff, #7353df);
+}
+
+.add-button:active { opacity: .8; }
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin-top: 25px;
+}
+
+.benefit {
+  padding: 14px 7px;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: rgba(255,255,255,.025);
+}
+
+.benefit-icon { font-size: 20px; }
+
+.benefit strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 10px;
+}
+
+.benefit span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.cart {
+  margin-top: 25px;
+  padding: 19px;
+  border: 1px solid rgba(151,116,255,.23);
+  border-radius: 21px;
+  background: linear-gradient(145deg, #1b1830, #12121e);
+}
+
+.cart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-head h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.cart-count {
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: rgba(151,116,255,.18);
+  color: #d7caff;
+  font-size: 10px;
+}
+
+.cart-empty {
+  padding: 22px 0 5px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+}
+
+.cart-items {
+  margin-top: 12px;
+}
+
+.cart-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-row strong { font-size: 13px; }
+.cart-row small { color: var(--muted); font-size: 10px; }
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quantity button {
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255,255,255,.07);
+  color: white;
+}
+
+.quantity span {
+  min-width: 12px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.cart-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 17px;
+  font-size: 12px;
+}
+
+.cart-summary span { color: var(--muted); }
+
+.cart-total {
+  color: var(--cyan);
+  font-weight: 800;
+}
+
+.checkout {
+  width: 100%;
+  margin-top: 17px;
+  padding: 15px;
+  border: 0;
+  border-radius: 13px;
+  background: linear-gradient(100deg, #9874ff, #7251df);
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 7px 22px rgba(119,82,255,.2);
+}
+
+.checkout:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.note {
+  margin: 13px 2px 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+footer {
+  padding: 35px 0 calc(30px + env(safe-area-inset-bottom));
+  color: #68677d;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  align-items: end;
+  justify-content: center;
+  padding: 15px;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(8px);
+}
+
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  width: min(100%, 480px);
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  background: #171625;
+  animation: rise .22s ease-out;
+}
+
+@keyframes rise {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-icon { font-size: 31px; }
+
+.modal h2 {
+  margin: 13px 0 8px;
+  font-size: 20px;
+}
+
+.modal p {
+  color: #aaa8bc;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.modal-close {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255,255,255,.07);
+  color: white;
+}
+
+@media (max-width: 360px) {
+  .container { width: calc(100% - 24px); }
+  .product { padding: 15px 11px 12px; }
+  .product h3 { font-size: 21px; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-icon">✦</div>
+      <div>
+        <div class="brand-name">STAN STARS</div>
+        <div class="brand-caption">DIGITAL STORE</div>
+      </div>
     </div>
-    <div class="product">
-      <div><div class="amount">100 Stars</div><div class="price">Цена скоро появится</div></div>
-      <button onclick="alert('Магазин пока находится в разработке')">Выбрать</button>
+    <div class="status">
+      <span class="status-dot"></span>
+      ONLINE
     </div>
-    <div class="product">
-      <div><div class="amount">250 Stars</div><div class="price">Цена скоро появится</div></div>
-      <button onclick="alert('Магазин пока находится в разработке')">Выбрать</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">THE NEXT LEVEL</div>
+    <h1>Твой мир.<br><span class="gradient-text">Твои Stars.</span></h1>
+    <p>Выбирай свой пакет Telegram Stars и открывай новые возможности.</p>
+    <div class="hero-tag">✦ Премиальный цифровой магазин</div>
+  </section>
+
+  <div class="section-heading">
+    <h2>Выбери пакет</h2>
+    <span>4 предложения</span>
+  </div>
+
+  <section class="products" aria-label="Пакеты Telegram Stars">
+    <article class="product">
+      <div class="coin">★</div>
+      <h3>50</h3>
+      <div class="unit">TELEGRAM STARS</div>
+      <div class="price">Цена уточняется</div>
+      <button class="add-button" data-amount="50">Добавить в корзину</button>
+    </article>
+
+    <article class="product featured">
+      <div class="product-badge">POPULAR</div>
+      <div class="coin">★</div>
+      <h3>100</h3>
+      <div class="unit">TELEGRAM STARS</div>
+      <div class="price">Цена уточняется</div>
+      <button class="add-button" data-amount="100">Добавить в корзину</button>
+    </article>
+
+    <article class="product">
+      <div class="coin">★</div>
+      <h3>250</h3>
+      <div class="unit">TELEGRAM STARS</div>
+      <div class="price">Цена уточняется</div>
+      <button class="add-button" data-amount="250">Добавить в корзину</button>
+    </article>
+
+    <article class="product">
+      <div class="product-badge">BIG PACK</div>
+      <div class="coin">★</div>
+      <h3>500</h3>
+      <div class="unit">TELEGRAM STARS</div>
+      <div class="price">Цена уточняется</div>
+      <button class="add-button" data-amount="500">Добавить в корзину</button>
+    </article>
+  </section>
+
+  <section class="benefits">
+    <div class="benefit">
+      <div class="benefit-icon">⚡</div>
+      <strong>Удобно</strong>
+      <span>Простой выбор</span>
     </div>
-    <div class="product">
-      <div><div class="amount">500 Stars</div><div class="price">Цена скоро появится</div></div>
-      <button onclick="alert('Магазин пока находится в разработке')">Выбрать</button>
+    <div class="benefit">
+      <div class="benefit-icon">🔒</div>
+      <strong>Безопасность</strong>
+      <span>Защита данных</span>
     </div>
-    <div class="note">
-      Это демонстрационная версия STAN STARS STORE.
-      Оплата и автоматическая доставка пока не подключены.
+    <div class="benefit">
+      <div class="benefit-icon">✦</div>
+      <strong>Современно</strong>
+      <span>Telegram Mini App</span>
     </div>
-  </main>
-  <footer>© 2026 STAN STARS STORE</footer>
+  </section>
+
+  <section class="cart" aria-label="Корзина">
+    <div class="cart-head">
+      <h2>Твоя корзина</h2>
+      <span class="cart-count" id="cartCount">0 товаров</span>
+    </div>
+
+    <div id="cartItems" class="cart-empty" aria-live="polite">
+      Здесь пока пусто. Выбери свой первый пакет ★
+    </div>
+
+    <div id="cartSummary" hidden>
+      <div class="cart-summary">
+        <span>Всего Stars</span>
+        <strong class="cart-total" id="totalStars">0 ★</strong>
+      </div>
+      <button class="checkout" id="checkoutButton">Продолжить</button>
+    </div>
+    <p class="note">Цены и оформление заказа будут доступны после подключения платёжной системы.</p>
+  </section>
+</main>
+
+<footer>
+  <strong>STAN STARS STORE</strong><br>
+  YOUR STARS. YOUR WORLD.<br>
+  © 2026
+</footer>
+</div>
+
+<div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-icon">✦</div>
+    <h2 id="modalTitle">Магазин готовится к запуску</h2>
+    <p id="modalText">Корзина работает, но оформление заказов пока не подключено. Мы подключим безопасную оплату и выдачу Stars на следующем этапе.</p>
+    <button class="modal-close" id="closeModal">Понятно</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const tg = window.Telegram?.WebApp;
+  if (tg) {
+    tg.ready();
+    tg.expand();
+    try {
+      tg.setHeaderColor("#090912");
+      tg.setBackgroundColor("#090912");
+    } catch (_) {}
+  }
+
+  const cart = new Map();
+  const cartItems = document.getElementById("cartItems");
+  const cartCount = document.getElementById("cartCount");
+  const cartSummary = document.getElementById("cartSummary");
+  const totalStars = document.getElementById("totalStars");
+  const modal = document.getElementById("modal");
+  const checkoutButton = document.getElementById("checkoutButton");
+
+  const format = value => new Intl.NumberFormat("ru-RU").format(value);
+
+  function notify(message) {
+    if (tg?.showAlert) {
+      tg.showAlert(message);
+    } else {
+      alert(message);
+    }
+  }
+
+  function renderCart() {
+    const entries = [...cart.entries()];
+    const totalItems = entries.reduce((sum, [, qty]) => sum + qty, 0);
+    const stars = entries.reduce((sum, [amount, qty]) => sum + amount * qty, 0);
+
+    cartCount.textContent = `${totalItems} товаров`;
+    totalStars.textContent = `${format(stars)} ★`;
+    cartSummary.hidden = totalItems === 0;
+
+    if (!totalItems) {
+      cartItems.className = "cart-empty";
+      cartItems.textContent = "Здесь пока пусто. Выбери свой первый пакет ★";
+      return;
+    }
+
+    cartItems.className = "cart-items";
+    cartItems.replaceChildren();
+
+    entries.forEach(([amount, qty]) => {
+      const row = document.createElement("div");
+      row.className = "cart-row";
+
+      const info = document.createElement("div");
+      const title = document.createElement("strong");
+      title.textContent = `${amount} Stars`;
+      const sub = document.createElement("br");
+      const small = document.createElement("small");
+      small.textContent = `${format(amount * qty)} Stars всего`;
+      info.append(title, sub, small);
+
+      const controls = document.createElement("div");
+      controls.className = "quantity";
+
+      const minus = document.createElement("button");
+      minus.type = "button";
+      minus.textContent = "−";
+      minus.setAttribute("aria-label", `Уменьшить пакет ${amount}`);
+      minus.addEventListener("click", () => changeQuantity(amount, -1));
+
+      const number = document.createElement("span");
+      number.textContent = qty;
+
+      const plus = document.createElement("button");
+      plus.type = "button";
+      plus.textContent = "+";
+      plus.setAttribute("aria-label", `Добавить пакет ${amount}`);
+      plus.addEventListener("click", () => changeQuantity(amount, 1));
+
+      controls.append(minus, number, plus);
+      row.append(info, controls);
+      cartItems.append(row);
+    });
+  }
+
+  function changeQuantity(amount, change) {
+    const next = (cart.get(amount) || 0) + change;
+    if (next <= 0) cart.delete(amount);
+    else cart.set(amount, next);
+    renderCart();
+    tg?.HapticFeedback?.selectionChanged?.();
+  }
+
+  document.querySelectorAll("[data-amount]").forEach(button => {
+    button.addEventListener("click", () => {
+      const amount = Number(button.dataset.amount);
+      if (![50, 100, 250, 500].includes(amount)) return;
+      changeQuantity(amount, 1);
+      tg?.HapticFeedback?.impactOccurred?.("light");
+    });
+  });
+
+  function openModal() {
+    modal.classList.add("open");
+    document.getElementById("closeModal").focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove("open");
+  }
+
+  checkoutButton.addEventListener("click", openModal);
+  document.getElementById("closeModal").addEventListener("click", closeModal);
+
+  modal.addEventListener("click", event => {
+    if (event.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeModal();
+  });
+
+  renderCart();
+})();
+</script>
 </body>
 </html>
